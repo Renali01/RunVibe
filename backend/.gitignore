@@ -5,6 +5,3 @@ node_modules/
 
 # Ignore environment variables file
 .env
-
-# Ignore generated secret key
-generateSecretKey.js
