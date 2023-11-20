@@ -1,7 +1,7 @@
 // src/components/HomePage.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/App.css'; // Adjust the import path
+import '../styles/HomePage.css'; // Adjust the import path
 
 const HomePage = () => {
   return (
@@ -17,6 +17,12 @@ const HomePage = () => {
           </Link>
           <Link to="/login" className="login-button">
             Login
+          </Link>
+          <Link to="/logrun" className="logrun-button">
+            Log Run
+          </Link>
+          <Link to="/dashboard" className="dashboard-button">
+            Your Dashboard
           </Link>
         </div>
       </main>
