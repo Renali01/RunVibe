@@ -7,4 +7,4 @@ node_modules/
 .env
 
 # ignore generate secret key 
-generateSecretKey.js
+.generateSecretKey.js
