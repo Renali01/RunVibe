@@ -1,6 +1,6 @@
 // src/components/LogInForm.js
 import React from 'react';
-import '../styles/App.css'; // Adjust the import path
+import '../styles/HomePage.css'; // Adjust the import path
 
 const LogInForm = () => {
   return (
