@@ -1,11 +1,15 @@
 // src/components/SignUpForm.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Dashboard from './Dashboard';
 import '../styles/HomePage.css';
 
 const SignUpForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -23,6 +27,9 @@ const SignUpForm = () => {
       if (response.ok) {
         // Registration successful
         console.log('User registered successfully');
+        const userData = await response.json();
+        setUser(userData);
+        navigate('/dashboard');
       } else {
         // Handle registration failure
         console.error('Registration failed. Status:', response.status);
@@ -69,6 +76,7 @@ const SignUpForm = () => {
           {error && <div className="error-message">{error}</div>}
         </form>
       </main>
+      {user && <Dashboard user={user} />}
       <footer>
         <p>Already have an account? <a href="/login">Login</a></p>
       </footer>

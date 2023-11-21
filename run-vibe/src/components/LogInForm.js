@@ -1,11 +1,15 @@
 // src/components/LogInForm.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/HomePage.css'; // Adjust the import path
+import Dashboard from './Dashboard';
 
 const LogInForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,7 +27,9 @@ const LogInForm = () => {
       if (response.ok) {
         // Login successful
         console.log('User logged in successfully');
-        // You can add further actions here, such as redirecting the user or updating state
+        const userData = await response.json();
+        setUser(userData);
+        navigate('/dashboard');
       } else {
         // Handle login failure
         console.error('Login failed. Status:', response.status);
@@ -70,6 +76,7 @@ const LogInForm = () => {
           {error && <div className="error-message">{error}</div>}
         </form>
       </main>
+      {user && <Dashboard user={user} />}
       <footer>
         <p>New to RunVibe? <a href="/signup">Sign Up</a></p>
       </footer>
