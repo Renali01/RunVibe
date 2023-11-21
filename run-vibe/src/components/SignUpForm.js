@@ -4,36 +4,41 @@ import '../styles/HomePage.css';
 
 const SignUpForm = () => {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
+  
     try {
-      // Make a POST request to backend endpoint
-      const response = await fetch('http://localhost:5000', {
+      // Make a POST request to backend registration endpoint
+      const response = await fetch('http://localhost:5000/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, email, password }),
+        body: JSON.stringify({ username, password }),
       });
-
+  
       if (response.ok) {
         // Registration successful
         console.log('User registered successfully');
       } else {
         // Handle registration failure
-        const data = await response.json();
-        setError(data.error);
+        console.error('Registration failed. Status:', response.status);
+
+        // Log the entire response
+        console.log('Response:', response);
+
+        // Try to parse the JSON error message, or use the status text
+        const data = await response.json().catch(() => null);
+        setError(data?.error || response.statusText || 'Internal Server Error');
       }
     } catch (error) {
       console.error('Error during registration:', error);
       setError('Internal Server Error');
     }
-  };
+  };  
 
   return (
     <div className="home-container">
@@ -45,17 +50,9 @@ const SignUpForm = () => {
           <div className="input-container">
             <input
               type="text"
-              placeholder="Username"
+              placeholder="Nickname"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="input-container">
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="input-container">
